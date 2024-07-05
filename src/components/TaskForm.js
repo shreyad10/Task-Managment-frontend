@@ -50,12 +50,9 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
         priority,
       });
       if (response.message) {
-        toast.success(response.message, {
-          onClose: () => {
-            closeModal();
-          },
-        });
       }
+      toast.success(response.message);
+      closeModal();
       setTitle("");
       setDescription("");
       setStatus("");

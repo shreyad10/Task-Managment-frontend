@@ -129,7 +129,7 @@ const TaskList = () => {
                 {tasks.map((task, index) => (
                   <tr key={task._id}>
                     <td>{indexOfFirstTask + index + 1}</td>
-                    <td>{task?.projectId?.name}</td>
+                    <td>{task?.title}</td>
                     <td>{task?.description}</td>
                     <td>{task?.priority.toUpperCase()}</td>
                     <td>{task?.status}</td>
