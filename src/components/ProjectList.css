@@ -1,0 +1,13 @@
+/* CustomButtonStyles.css */
+.custom-primary-button {
+    background-color: #007bff; /* Custom primary button background color */
+    color: #fff; /* Custom primary button text color */
+    border-color: #007bff; /* Custom primary button border color */
+  }
+  
+  .custom-primary-button:hover {
+    background-color: #0056b3; /* Custom primary button hover background color */
+    border-color: #0056b3; /* Custom primary button hover border color */
+    color: #fff; /* Custom primary button hover text color */
+  }
+  

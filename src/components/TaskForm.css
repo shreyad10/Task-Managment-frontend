@@ -1,0 +1,87 @@
+/* .task-form-container {
+    background-color: #f9f9f9;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    margin: 20px auto;
+  }
+  
+  .task-form-container h2 {
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  
+  .task-form-container .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+  }
+  
+  .task-form-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .task-form-container .form-control {
+    border-radius: 5px;
+    border: 1px solid #ced4da;
+    padding: 10px;
+  }
+  
+  .task-form-container .btn {
+    width: 100%;
+    border-radius: 5px;
+  }
+   */
+
+   .task-form-container {
+    max-width: 500px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+  }
+  
+  .task-form-container form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .task-form-container .form-group {
+    margin-bottom: 15px;
+  }
+  
+  .task-form-container label {
+    font-weight: bold;
+  }
+  
+  .task-form-container input[type="text"],
+  .task-form-container input[type="email"],
+  .task-form-container input[type="password"],
+  .task-form-container textarea,
+  .task-form-container select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .task-form-container button[type="submit"] {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .task-form-container button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  
+  .task-form-container .mb-3 {
+    margin-bottom: 20px;
+  }
+  

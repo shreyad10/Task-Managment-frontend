@@ -1,0 +1,19 @@
+/* Project.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    position: relative;
+  }
+  
+  .btn-add-project {
+    font-size: 14px;
+    padding: 0.375rem 0.75rem;
+    min-width: 120px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin-top: 1rem;
+    z-index: 1; /* Ensure button is above other content */
+  }
+  
