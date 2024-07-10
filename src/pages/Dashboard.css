@@ -13,8 +13,11 @@
   
   .dashboard-user {
     color: #6c757d;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
   }
+  /* .dashboard-user {
+    margin-bottom: 10px; /* Adjust as needed */
+  /* } */ 
   
   .projects-section, .tasks-section {
     margin-bottom: 30px;
@@ -46,3 +49,18 @@
     border-color: #f5c6cb;
   }
   
+  .dashboard-animation {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease-in-out forwards;
+    color: #6c757d;
+    margin-bottom: 20px; 
+  }
+  
+  @keyframes fadeInAnimation {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

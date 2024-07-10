@@ -19,3 +19,19 @@
   margin-top: 1rem; /* Optional: Top margin for spacing */
   z-index: 1; /* Ensure button is above other content */
 }
+
+.dashboard-animation {
+  opacity: 0;
+  animation: fadeInAnimation 1s ease-in-out forwards;
+  color: #6c757d;
+  margin-bottom: 20px; 
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

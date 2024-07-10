@@ -43,7 +43,6 @@ const TaskList = () => {
       setIsLoadingTasks(false);
     }
   };
-  
 
   const handleDelete = async (taskId) => {
     const authToken = localStorage.getItem("authToken");
@@ -136,19 +135,6 @@ const TaskList = () => {
                     <td>{new Date(task?.createdAt).toLocaleString()}</td>
                     <td>{new Date(task?.dueDate).toLocaleString()}</td>
                     <td>
-                      {/* <button
-                        className="btn btn-sm btn-primary mr-2"
-                        onClick={() => handleEdit(task._id)}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="btn btn-sm btn-danger"
-                        onClick={() => handleDelete(task._id)}
-                      >
-                        Delete
-                      </button> */}
-
                       <Button
                        variant="info" 
                       size="sm"
@@ -174,21 +160,23 @@ const TaskList = () => {
       </div>
 
       {/* Pagination */}
-      <nav>
-        <ul className="pagination">
-          <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-            <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>
-          </li>
-          {[...Array(Math.ceil(totalTasks / tasksPerPage)).keys()].map(pageNumber => (
-            <li key={pageNumber + 1} className={`page-item ${pageNumber + 1 === currentPage ? 'active' : ''}`}>
-              <button className="page-link" onClick={() => paginate(pageNumber + 1)}>{pageNumber + 1}</button>
+      {tasks.length > 0 && (
+        <nav>
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>
             </li>
-          ))}
-          <li className={`page-item ${currentPage === Math.ceil(totalTasks / tasksPerPage) ? 'disabled' : ''}`}>
-            <button className="page-link" onClick={() => paginate(currentPage + 1)}>Next</button>
-          </li>
-        </ul>
-      </nav>
+            {[...Array(Math.ceil(totalTasks / tasksPerPage)).keys()].map(pageNumber => (
+              <li key={pageNumber + 1} className={`page-item ${pageNumber + 1 === currentPage ? 'active' : ''}`}>
+                <button className="page-link" onClick={() => paginate(pageNumber + 1)}>{pageNumber + 1}</button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === Math.ceil(totalTasks / tasksPerPage) ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage + 1)}>Next</button>
+            </li>
+          </ul>
+        </nav>
+      )}
 
       {/* Edit Task Modal */}
       <Modal show={showEditModal} onHide={handleCloseEditModal}>

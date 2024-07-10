@@ -25,6 +25,7 @@ const Login = () => {
       localStorage.setItem('authToken', authToken);
       localStorage.setItem('email', email);
       navigate('/dashboard');
+      window.location.reload();
     } catch (error) {
       if (error.response.data.message) {
         toast.error(error.response.data.message);
@@ -70,7 +71,7 @@ const Login = () => {
               </div>
               <div className="form-group d-flex justify-content-center">
                 <ReCAPTCHA
-                  sitekey="6Lf8tAwqAAAAACtQ-HDWhjlE4Jd-Mj1l1DBXfq9x" // replace with your site key
+                  sitekey={process.env.REACT_APP_RECAPTCHA_SITE_KEY}
                   onChange={handleRecaptchaChange}
                 />
               </div>
