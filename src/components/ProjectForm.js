@@ -17,8 +17,8 @@ const ProjectForm = ({ fetchProjects, handleClose }) => {
       }).then((res) => {
         fetchProjects();
         handleClose();
-        toast.success("Project Added Successfully!");
       });
+      toast.success("Project Added Successfully!");
       setName("");
       setDescription("");
     } catch (error) {
