@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { getTasks, deleteTask, updateTask } from '../api/api';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
@@ -20,15 +20,10 @@ const TaskList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const tasksPerPage = 10; // Number of tasks per page
 
-  useEffect(() => {
-    fetchTasks(currentPage);
-  }, [currentPage]);
-
-  const fetchTasks = async (page) => {
+  const fetchTasks = useCallback(async (page) => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await getTasks(authToken, page, tasksPerPage);
-      // console.log('API Response:', response, tasks); // Log response to debug
       setTasks(response.tasks);
       setTotalTasks(response.total); // Set total number of tasks
       setIsLoadingTasks(false);
@@ -42,7 +37,11 @@ const TaskList = () => {
       }
       setIsLoadingTasks(false);
     }
-  };
+  }, [navigate, tasksPerPage]);
+
+  useEffect(() => {
+    fetchTasks(currentPage);
+  }, [currentPage, fetchTasks]);
 
   const handleDelete = async (taskId) => {
     const authToken = localStorage.getItem("authToken");

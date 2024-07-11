@@ -11,21 +11,21 @@ const Dashboard = () => {
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [errorProjects, setErrorProjects] = useState(null);
   const navigate = useNavigate();
-  const [email, setEmail] = useState("")
+  const [email, setEmail] = useState("");
 
-  const fetchTasks = useCallback( async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const authToken = localStorage.getItem("authToken");
-      const user_email = localStorage.getItem("email")
-      setEmail(user_email)
-    
+      const user_email = localStorage.getItem("email");
+      setEmail(user_email);
+
       const response = await getTasks(authToken);
       setTasks(response.tasks);
       setIsLoadingTasks(false);
     } catch (error) {
       console.error("Error fetching tasks:", error);
-      if (error.response.data.error === "jwt expired") {
-        setErrorTasks("Session expired. please login again");
+      if (error.response?.data?.error === "jwt expired") {
+        setErrorTasks("Session expired. Please login again");
         navigate("/login");
         localStorage.clear();
       } else {
@@ -33,7 +33,7 @@ const Dashboard = () => {
       }
       setIsLoadingTasks(false);
     }
-  }, [navigate])
+  }, []); // Removed navigate from the dependency array
 
   const fetchProjects = useCallback(async () => {
     try {
@@ -46,7 +46,7 @@ const Dashboard = () => {
       setErrorProjects("Failed to fetch projects. Please try again.");
       setIsLoadingProjects(false);
     }
-  }, [navigate])
+  }, []); // Removed navigate from the dependency array
 
   useEffect(() => {
     fetchTasks();

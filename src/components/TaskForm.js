@@ -12,10 +12,7 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
   const [projectId, setProjectId] = useState("");
   const [priority, setPriority] = useState("");
   const [projects, setProjects] = useState([]);
-  const [isLoadingTasks, setIsLoadingTasks] = useState(true);
-  const [errorTasks, setErrorTasks] = useState(null);
   const navigate = useNavigate();
-
 
   const fetchProjects = useCallback(async () => {
     try {
@@ -25,14 +22,12 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
     } catch (error) {
       console.error("Error fetching projects:", error.response.data);
       if (error.response.data.error === "jwt expired") {
-        setErrorTasks("Session expired. please login again"); // Set error message
         navigate("/login");
       } else {
-        setErrorTasks("Failed to fetch tasks. Please try again.");
+        toast.error("Failed to fetch projects. Please try again.");
       }
-      setIsLoadingTasks(false);
     }
-  }, [navigate])
+  }, [navigate]);
 
   useEffect(() => {
     fetchProjects();
@@ -50,8 +45,6 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
         projectId,
         priority,
       });
-      if (response.message) {
-      }
       toast.success(response.message);
       closeModal();
       setTitle("");
@@ -63,8 +56,7 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
       fetchTasks();
     } catch (error) {
       console.error("Error creating task:", error);
-      // Handle error creating task (e.g., display error message)
-      setErrorTasks("Failed to add task. Please try again.");
+      toast.error("Failed to add task. Please try again.");
     }
   };
 
