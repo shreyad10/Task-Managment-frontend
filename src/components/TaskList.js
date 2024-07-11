@@ -122,7 +122,8 @@ const TaskList = () => {
                   <th>Status</th>
                   <th>Created At</th>
                   <th>Due Date</th>
-                  <th>Actions</th>
+                  <th className="text-center">Edit</th>
+                  <th className="text-center">Delete</th>
                 </tr>
               </thead>
               <tbody>
@@ -135,7 +136,7 @@ const TaskList = () => {
                     <td>{task?.status}</td>
                     <td>{new Date(task?.createdAt).toLocaleString()}</td>
                     <td>{new Date(task?.dueDate).toLocaleString()}</td>
-                    <td>
+                    <td className="text-center">
                       <Button
                        variant="info" 
                       size="sm"
@@ -144,6 +145,8 @@ const TaskList = () => {
                     >
                       Edit
                     </Button>
+                    </td>
+                    <td className="text-center">
                     <Button
                       variant="danger"
                       size="sm"

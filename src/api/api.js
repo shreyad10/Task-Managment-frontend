@@ -72,7 +72,7 @@ export const deleteTask = async (authToken, taskId) => {
 };
 
 // Projects
-export const getProjects = async (authToken, page, limit= 10) => {
+export const getProjects = async (authToken, page, limit) => {
   try {
     const response = await api.get("/projects", {
       params: {

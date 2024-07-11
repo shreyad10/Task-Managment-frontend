@@ -114,7 +114,8 @@ const ProjectList = () => {
                 <th>Description</th>
                 <th>Owner</th>
                 <th>Created At</th>
-                <th>Actions</th>
+                <th className="text-center">Edit</th>
+                <th className="text-center">Delete</th>
               </tr>
             </thead>
             <tbody>
@@ -125,7 +126,7 @@ const ProjectList = () => {
                   <td>{project.description}</td>
                   <td>{project.owner.user_name}</td>
                   <td>{new Date(project.createdAt).toLocaleString()}</td>
-                  <td>
+                  <td className="text-center">
                     <Button
                       variant="info"
                       size="sm"
@@ -134,6 +135,8 @@ const ProjectList = () => {
                     >
                       Edit
                     </Button>
+                    </td>
+                    <td className="text-center">
                     <Button
                       variant="danger"
                       size="sm"
