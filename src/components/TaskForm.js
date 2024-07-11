@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { createTask, getProjects } from "../api/api";
 import "./TaskForm.css"; // Import custom CSS
 import { useNavigate } from "react-router-dom";
@@ -16,11 +16,8 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
   const [errorTasks, setErrorTasks] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await getProjects(authToken);
@@ -35,7 +32,11 @@ const TaskForm = ({ fetchTasks, closeModal }) => {
       }
       setIsLoadingTasks(false);
     }
-  };
+  }, [navigate])
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();

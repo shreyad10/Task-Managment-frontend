@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { getProjects, getTasks } from "../api/api";
 import { Link, useNavigate } from "react-router-dom";
 import "./Dashboard.css"; // Import custom CSS
 
-const Dashboard = ({ userEmail }) => {
+const Dashboard = () => {
   const [tasks, setTasks] = useState([]);
   const [isLoadingTasks, setIsLoadingTasks] = useState(true);
   const [errorTasks, setErrorTasks] = useState(null);
@@ -13,12 +13,7 @@ const Dashboard = ({ userEmail }) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("")
 
-  useEffect(() => {
-    fetchTasks();
-    fetchProjects();
-  }, []);
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback( async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const user_email = localStorage.getItem("email")
@@ -38,9 +33,9 @@ const Dashboard = ({ userEmail }) => {
       }
       setIsLoadingTasks(false);
     }
-  };
+  }, [navigate])
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await getProjects(authToken);
@@ -51,7 +46,12 @@ const Dashboard = ({ userEmail }) => {
       setErrorProjects("Failed to fetch projects. Please try again.");
       setIsLoadingProjects(false);
     }
-  };
+  }, [navigate])
+
+  useEffect(() => {
+    fetchTasks();
+    fetchProjects();
+  }, [fetchTasks, fetchProjects]);
 
   const renderProjectRows = () => {
     return projects.slice(0, 5).map((project, index) => (

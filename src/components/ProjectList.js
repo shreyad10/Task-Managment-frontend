@@ -1,61 +1,69 @@
-import React, { useEffect, useState } from 'react';
-import { getProjects, deleteProject, updateProject } from '../api/api';
-import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
-import { Spinner, Alert, Button, Modal, Form } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import React, { useEffect, useCallback, useState } from "react";
+import { getProjects, deleteProject, updateProject } from "../api/api";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { Spinner, Alert, Button, Modal, Form } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [errorProjects, setErrorProjects] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editProject, setEditProject] = useState({ name: '', description: '', id: '' });
+  const [editProject, setEditProject] = useState({
+    name: "",
+    description: "",
+    id: "",
+  });
   const navigate = useNavigate();
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
-
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
-      const authToken = localStorage.getItem('authToken');
+      const authToken = localStorage.getItem("authToken");
       const response = await getProjects(authToken);
       setProjects(response.projects);
       setIsLoadingProjects(false);
     } catch (error) {
-      console.error('Error fetching projects:', error);
-      if (error.response && error.response.data.error === 'jwt expired') {
-        setErrorProjects('Session expired. Please login again.');
-        navigate('/login');
+      console.error("Error fetching projects:", error);
+      if (error.response && error.response.data.error === "jwt expired") {
+        setErrorProjects("Session expired. Please login again.");
+        navigate("/login");
         // localStorage.clear();
       } else {
-        setErrorProjects('Failed to fetch projects. Please try again.');
+        setErrorProjects("Failed to fetch projects. Please try again.");
       }
       setIsLoadingProjects(false);
     }
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   const handleDelete = async (projectId) => {
     try {
-      const authToken = localStorage.getItem('authToken');
+      const authToken = localStorage.getItem("authToken");
       const response = await deleteProject(authToken, projectId);
       toast.success(response.message);
       fetchProjects();
     } catch (error) {
-      console.error('Error deleting project:', error);
-      toast.error('Failed to delete. Please try again.');
+      console.error("Error deleting project:", error);
+      toast.error("Failed to delete. Please try again.");
     }
   };
 
   const handleEdit = (project) => {
-    setEditProject({ name: project.name, description: project.description, id: project._id });
+    setEditProject({
+      name: project.name,
+      description: project.description,
+      id: project._id,
+    });
     setShowEditModal(true);
   };
 
   const handleSaveEdit = async () => {
     try {
-      const authToken = localStorage.getItem('authToken');
+      const authToken = localStorage.getItem("authToken");
       const response = await updateProject(authToken, editProject.id, {
         name: editProject.name,
         description: editProject.description,
@@ -64,8 +72,8 @@ const ProjectList = () => {
       setShowEditModal(false);
       fetchProjects();
     } catch (error) {
-      console.error('Error updating project:', error);
-      toast.error('Failed to update. Please try again.');
+      console.error("Error updating project:", error);
+      toast.error("Failed to update. Please try again.");
     }
   };
 
@@ -105,7 +113,7 @@ const ProjectList = () => {
                   <td>{new Date(project.createdAt).toLocaleString()}</td>
                   <td>
                     <Button
-                       variant="info" 
+                      variant="info"
                       size="sm"
                       className="mr-2"
                       onClick={() => handleEdit(project)}
@@ -140,7 +148,9 @@ const ProjectList = () => {
                 type="text"
                 placeholder="Enter project name"
                 value={editProject.name}
-                onChange={(e) => setEditProject({ ...editProject, name: e.target.value })}
+                onChange={(e) =>
+                  setEditProject({ ...editProject, name: e.target.value })
+                }
               />
             </Form.Group>
             <Form.Group controlId="formProjectDescription">
@@ -150,7 +160,12 @@ const ProjectList = () => {
                 rows={3}
                 placeholder="Enter project description"
                 value={editProject.description}
-                onChange={(e) => setEditProject({ ...editProject, description: e.target.value })}
+                onChange={(e) =>
+                  setEditProject({
+                    ...editProject,
+                    description: e.target.value,
+                  })
+                }
               />
             </Form.Group>
           </Form>

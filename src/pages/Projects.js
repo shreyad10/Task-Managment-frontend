@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import ProjectList from '../components/ProjectList';
 import ProjectForm from '../components/ProjectForm';
@@ -16,11 +16,8 @@ const Projects = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    fetchProjects();
-  }, []);
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const authToken = localStorage.getItem('authToken');
       const response = await getProjects(authToken);
@@ -36,7 +33,11 @@ const Projects = () => {
       }
       setIsLoadingProjects(false);
     }
-  };
+  }, [navigate])
+
+  useEffect(() => {
+    fetchProjects();
+  }, [fetchProjects]);
 
   return (
     <div className="container mt-5">
