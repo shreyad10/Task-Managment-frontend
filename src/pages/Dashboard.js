@@ -33,7 +33,7 @@ const Dashboard = () => {
       }
       setIsLoadingTasks(false);
     }
-  }, []); // Removed navigate from the dependency array
+  }, [navigate]); // Removed navigate from the dependency array
 
   const fetchProjects = useCallback(async () => {
     try {
