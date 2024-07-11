@@ -32,7 +32,7 @@
       "react-app/jest"
     ],
     "rules": {
-      "no-warning-comments": "off"
+      "no-unused-vars": "warn" 
     }
   },
   "browserslist": {

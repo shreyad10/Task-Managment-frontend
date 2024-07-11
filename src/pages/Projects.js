@@ -16,7 +16,6 @@ const Projects = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-
   const fetchProjects = useCallback(async () => {
     try {
       const authToken = localStorage.getItem('authToken');
@@ -33,7 +32,7 @@ const Projects = () => {
       }
       setIsLoadingProjects(false);
     }
-  }, [navigate])
+  }, [navigate]);
 
   useEffect(() => {
     fetchProjects();
@@ -42,7 +41,9 @@ const Projects = () => {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
-      <h5 className="dashboard-animation">Transform your ideas into reality. Start by organizing your projects effectively and achieving milestones every step of the way!</h5>
+        <h5 className="dashboard-animation">
+          Transform your ideas into reality. Start by organizing your projects effectively and achieving milestones every step of the way!
+        </h5>
         <div className="position-relative">
           <Button variant="primary" onClick={handleShow} className="btn-add-project">
             Add Project
@@ -50,7 +51,17 @@ const Projects = () => {
         </div>
       </div>
 
-      <ProjectList fetchProjects={fetchProjects} />
+      {isLoadingProjects ? (
+        <p>Loading projects...</p>
+      ) : errorProjects ? (
+        <div className="alert alert-danger" role="alert">
+          {errorProjects}
+        </div>
+      ) : projects.length === 0 ? (
+        <p>No projects found.</p>
+      ) : (
+        <ProjectList fetchProjects={fetchProjects} projects={projects} />
+      )}
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
