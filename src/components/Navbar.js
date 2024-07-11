@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import './Navbar.css'; // Import custom CSS if needed
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate()
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
@@ -14,7 +15,8 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.clear();
     setIsAuthenticated(false);
-    window.location.href = '/login'; // Redirect to login page after logout
+    navigate("/")
+    // window.location.href = '/login'; 
   };
 
   return (
