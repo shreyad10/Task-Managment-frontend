@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import TaskList from "../components/TaskList";
 import TaskForm from "../components/TaskForm";
-import { Button, Modal, Container, Spinner, Alert, CloseButton } from "react-bootstrap"; // Import CloseButton from react-bootstrap
+import { Button, Modal, Container, Spinner, Alert } from "react-bootstrap"; // Import CloseButton from react-bootstrap
 import "bootstrap/dist/css/bootstrap.min.css";
 import { getTasks, getProjects } from "../api/api";
 import "./Tasks.css"; // Import custom CSS
