@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Navbar.css'; // Import custom CSS if needed
 
 const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const location = useLocation();
 
   useEffect(() => {
     const authToken = localStorage.getItem('authToken');
     setIsAuthenticated(!!authToken);
-  }, []);
+  }, [location]);
 
   const handleLogout = () => {
     localStorage.clear();
@@ -35,13 +36,13 @@ const Navbar = () => {
           <ul className="navbar-nav ml-auto">
             {isAuthenticated ? (
               <>
-                <li className="nav-item">
+                <li className={`nav-item ${location.pathname === '/dashboard' ? 'active' : ''}`}>
                   <Link className="nav-link" to="/dashboard">Dashboard</Link>
                 </li>
-                <li className="nav-item">
+                <li className={`nav-item ${location.pathname === '/projects' ? 'active' : ''}`}>
                   <Link className="nav-link" to="/projects">Projects</Link>
                 </li>
-                <li className="nav-item">
+                <li className={`nav-item ${location.pathname === '/tasks' ? 'active' : ''}`}>
                   <Link className="nav-link" to="/tasks">Tasks</Link>
                 </li>
                 <li className="nav-item">
@@ -50,10 +51,10 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <li className="nav-item">
+                <li className={`nav-item ${location.pathname === '/login' ? 'active' : ''}`}>
                   <Link className="nav-link" to="/login">Login</Link>
                 </li>
-                <li className="nav-item">
+                <li className={`nav-item ${location.pathname === '/register' ? 'active' : ''}`}>
                   <Link className="nav-link" to="/register">Register</Link>
                 </li>
               </>

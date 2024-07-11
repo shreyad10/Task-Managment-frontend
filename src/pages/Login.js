@@ -25,7 +25,7 @@ const Login = () => {
       localStorage.setItem('authToken', authToken);
       localStorage.setItem('email', email);
       navigate('/dashboard');
-      window.location.reload();
+      // window.location.reload();
     } catch (error) {
       if (error.response.data.message) {
         toast.error(error.response.data.message);
