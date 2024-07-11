@@ -38,6 +38,10 @@ const Projects = () => {
     fetchProjects();
   }, [fetchProjects]);
 
+  useEffect(() => {
+    console.log("Projects updated: ", projects);
+  }, [projects]);
+
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">

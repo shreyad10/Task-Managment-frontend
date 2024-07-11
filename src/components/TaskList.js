@@ -2,6 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { getTasks, deleteTask, updateTask } from '../api/api';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { toast } from "react-toastify";
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -45,7 +46,8 @@ const TaskList = () => {
 
   const handleDelete = async (taskId) => {
     const authToken = localStorage.getItem("authToken");
-    await deleteTask(authToken, taskId);
+    const response = await deleteTask(authToken, taskId);
+    toast.success(response.message);
     fetchTasks(currentPage);
   };
 

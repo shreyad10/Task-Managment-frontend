@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { createProject } from "../api/api";
 import { toast } from "react-toastify";
 
-
 const ProjectForm = ({ fetchProjects, handleClose }) => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -10,14 +9,13 @@ const ProjectForm = ({ fetchProjects, handleClose }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const authToken = localStorage.getItem('authToken');
+      const authToken = localStorage.getItem("authToken");
       await createProject(authToken, {
         name,
         description,
-      }).then((res) => {
-        fetchProjects();
-        handleClose();
       });
+      handleClose();
+      await fetchProjects();
       toast.success("Project Added Successfully!");
       setName("");
       setDescription("");
@@ -25,7 +23,6 @@ const ProjectForm = ({ fetchProjects, handleClose }) => {
       toast.error("Failed to add project. Please try again.");
     }
   };
-
 
   return (
     <form onSubmit={handleSubmit}>
@@ -57,7 +54,9 @@ const ProjectForm = ({ fetchProjects, handleClose }) => {
           required
         />
       </div>
-      <button type="submit" className="btn btn-primary">Add Project</button>
+      <button type="submit" className="btn btn-primary">
+        Add Project
+      </button>
     </form>
   );
 };

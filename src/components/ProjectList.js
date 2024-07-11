@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
+  const [totalProjects, setTotalProjects] = useState(0); // Total number of projects
   const [isLoadingProjects, setIsLoadingProjects] = useState(true);
   const [errorProjects, setErrorProjects] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -17,35 +18,39 @@ const ProjectList = () => {
   });
   const navigate = useNavigate();
 
-  const fetchProjects = useCallback(async () => {
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const projectsPerPage = 10; 
+
+  const fetchProjects = useCallback(async (page) => {
     try {
       const authToken = localStorage.getItem("authToken");
-      const response = await getProjects(authToken);
+      const response = await getProjects(authToken, page, projectsPerPage);
       setProjects(response.projects);
+      setTotalProjects(response.total); 
       setIsLoadingProjects(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
       if (error.response && error.response.data.error === "jwt expired") {
         setErrorProjects("Session expired. Please login again.");
         navigate("/login");
-        // localStorage.clear();
       } else {
         setErrorProjects("Failed to fetch projects. Please try again.");
       }
       setIsLoadingProjects(false);
     }
-  }, [navigate]);
+  }, [navigate, projectsPerPage]);
 
   useEffect(() => {
-    fetchProjects();
-  }, [fetchProjects]);
+    fetchProjects(currentPage);
+  }, [currentPage, fetchProjects]);
 
   const handleDelete = async (projectId) => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await deleteProject(authToken, projectId);
       toast.success(response.message);
-      fetchProjects();
+      fetchProjects(currentPage);
     } catch (error) {
       console.error("Error deleting project:", error);
       toast.error("Failed to delete. Please try again.");
@@ -70,12 +75,21 @@ const ProjectList = () => {
       });
       toast.success(response.message);
       setShowEditModal(false);
-      fetchProjects();
+      fetchProjects(currentPage);
     } catch (error) {
       console.error("Error updating project:", error);
       toast.error("Failed to update. Please try again.");
     }
   };
+
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    fetchProjects(pageNumber);
+  };
+
+  // Calculate indexes for current page
+  const indexOfLastProject = currentPage * projectsPerPage;
+  const indexOfFirstProject = indexOfLastProject - projectsPerPage;
 
   return (
     <div className="container mt-5">
@@ -106,7 +120,7 @@ const ProjectList = () => {
             <tbody>
               {projects.map((project, index) => (
                 <tr key={project._id}>
-                  <td>{index + 1}</td>
+                  <td>{indexOfFirstProject + index + 1}</td>
                   <td>{project.name}</td>
                   <td>{project.description}</td>
                   <td>{project.owner.user_name}</td>
@@ -134,6 +148,25 @@ const ProjectList = () => {
           </table>
         )}
       </div>
+
+      {/* Pagination */}
+      {projects.length > 0 && (
+        <nav>
+          <ul className="pagination">
+            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>
+            </li>
+            {[...Array(Math.ceil(totalProjects / projectsPerPage)).keys()].map(pageNumber => (
+              <li key={pageNumber + 1} className={`page-item ${pageNumber + 1 === currentPage ? 'active' : ''}`}>
+                <button className="page-link" onClick={() => paginate(pageNumber + 1)}>{pageNumber + 1}</button>
+              </li>
+            ))}
+            <li className={`page-item ${currentPage === Math.ceil(totalProjects / projectsPerPage) ? 'disabled' : ''}`}>
+              <button className="page-link" onClick={() => paginate(currentPage + 1)}>Next</button>
+            </li>
+          </ul>
+        </nav>
+      )}
 
       {/* Edit Project Modal */}
       <Modal show={showEditModal} onHide={() => setShowEditModal(false)}>
@@ -171,9 +204,6 @@ const ProjectList = () => {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          {/* <Button variant="secondary" onClick={() => setShowEditModal(false)}>
-            Close
-          </Button> */}
           <Button variant="primary" onClick={handleSaveEdit}>
             Save Changes
           </Button>
