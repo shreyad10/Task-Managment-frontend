@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import TaskList from "../components/TaskList";
 import TaskForm from "../components/TaskForm";
 import { Button, Modal, Container, Spinner, Alert } from "react-bootstrap"; // Import CloseButton from react-bootstrap
@@ -18,12 +18,7 @@ const Tasks = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  useEffect(() => {
-    fetchTasks();
-    fetchProjects();
-  }, []);
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await getTasks(authToken);
@@ -39,9 +34,9 @@ const Tasks = () => {
       }
       setIsLoading(false);
     }
-  };
+  }, [navigate]);
 
-  const fetchProjects = async () => {
+  const fetchProjects = useCallback(async () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await getProjects(authToken);
@@ -55,7 +50,12 @@ const Tasks = () => {
         setError("Failed to fetch projects. Please try again.");
       }
     }
-  };
+  }, [navigate]);
+
+  useEffect(() => {
+    fetchTasks();
+    fetchProjects();
+  }, [fetchTasks, fetchProjects]);
 
   const handleAlertClose = () => {
     setError(null); // Reset error state to close the Alert

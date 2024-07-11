@@ -7,7 +7,7 @@ import Projects from './pages/Projects';
 import Tasks from './pages/Tasks';
 import Dashboard from './pages/Dashboard'; 
 
-import { BrowserRouter as Router, Routes, Route, Link, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
