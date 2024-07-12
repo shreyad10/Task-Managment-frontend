@@ -45,8 +45,8 @@ const Projects = () => {
   return (
     <div className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="dashboard-animation">
-          Transform your ideas into reality. Start by organizing your projects effectively and achieving milestones every step of the way!
+      <h5 className="dashboard-animation">
+          🎯 Transform your ideas into reality. Start by organizing your projects effectively and achieving milestones every step of the way!
         </h5>
         <div className="position-relative">
           <Button variant="primary" onClick={handleShow} className="btn-add-project">

@@ -1,66 +1,70 @@
 /* Dashboard.css */
 
 .dashboard-container {
-    background-color: #f8f9fa;
-    padding: 20px;
-    border-radius: 8px;
-  }
-  
-  .dashboard-heading {
-    color: #343a40;
-    font-weight: bold;
-  }
-  
-  .dashboard-user {
-    color: #6c757d;
-    margin-bottom: 10px;
-  }
-  /* .dashboard-user {
-    margin-bottom: 10px; /* Adjust as needed */
-  /* } */ 
-  
-  .projects-section, .tasks-section {
-    margin-bottom: 30px;
-  }
-  
-  .section-heading {
-    color: #007bff;
-    margin-bottom: 15px;
-    border-bottom: 2px solid #007bff;
-    padding-bottom: 5px;
-  }
-  
-  .table-header {
-    background-color: #007bff;
-    color: white;
-  }
-  
-  .table-striped tbody tr:nth-of-type(odd) {
-    background-color: rgba(0, 123, 255, 0.05);
-  }
-  
-  .table-bordered th, .table-bordered td {
-    border: 1px solid #dee2e6 !important;
-  }
-  
-  .alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-  }
-  
-  .dashboard-animation {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 8px;
+  animation: fadeInAnimation 1s ease-in-out forwards;
+}
+
+.dashboard-heading {
+  color: #343a40;
+  font-weight: bold;
+  animation: fadeInAnimation 1.5s ease-in-out forwards;
+}
+
+.dashboard-user {
+  color: #6c757d;
+  margin-bottom: 10px;
+  animation: fadeInAnimation 2s ease-in-out forwards;
+}
+
+.projects-section, .tasks-section {
+  margin-bottom: 30px;
+  animation: fadeInAnimation 2.5s ease-in-out forwards;
+}
+
+.section-heading {
+  color: #007bff;
+  margin-bottom: 15px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 5px;
+  animation: fadeInAnimation 3s ease-in-out forwards;
+}
+
+.table-header {
+  background-color: #007bff;
+  color: white;
+  animation: fadeInAnimation 3.5s ease-in-out forwards;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.table-bordered th, .table-bordered td {
+  border: 1px solid #dee2e6 !important;
+}
+
+.alert-danger {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+  animation: fadeInAnimation 4s ease-in-out forwards;
+}
+
+.dashboard-animation {
+  opacity: 0;
+  animation: fadeInAnimation 2.5s ease-in-out forwards;
+  color: #6c757d;
+  margin-bottom: 20px; 
+}
+
+@keyframes fadeInAnimation {
+  0% {
     opacity: 0;
-    animation: fadeInAnimation 1s ease-in-out forwards;
-    color: #6c757d;
-    margin-bottom: 20px; 
   }
-  
-  @keyframes fadeInAnimation {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+  100% {
+    opacity: 1;
   }
+}

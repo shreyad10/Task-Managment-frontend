@@ -81,13 +81,14 @@ const Dashboard = () => {
 
   return (
     <div className="container mt-5 dashboard-container">
-      <h2 className="dashboard-heading">Welcome to Dashboard, </h2>
+      <h2 className="dashboard-heading">🏠 Welcome to Dashboard,</h2>
       <p className="dashboard-user">You are logged in as: {email}</p>
       <h5 className="dashboard-animation">
-        Organize your tasks efficiently with projects. Stay on top of your goals and make progress every day!
+        📈 Organize your tasks efficiently with projects. Stay on top of your
+        goals and make progress every day!
       </h5>
       <div className="projects-section">
-        <h4 className="section-heading">Your top projects:</h4>
+        <h4 className="section-heading">🛠️ Your top projects:</h4>
         {isLoadingProjects ? (
           <p>Loading projects...</p>
         ) : errorProjects ? (
@@ -116,7 +117,7 @@ const Dashboard = () => {
       </div>
 
       <div className="tasks-section">
-        <h4 className="section-heading">Your top tasks:</h4>
+        <h4 className="section-heading">📋 Your top tasks:</h4>
         {isLoadingTasks ? (
           <p>Loading tasks...</p>
         ) : errorTasks ? (

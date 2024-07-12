@@ -1,9 +1,11 @@
-import React, { useEffect, useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+import { Spinner, Alert, Button, Modal, Form } from "react-bootstrap";
 import { getProjects, deleteProject, updateProject } from "../api/api";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { Spinner, Alert, Button, Modal, Form } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { FaEdit, FaTrash } from "react-icons/fa"; // Import FontAwesome icons
+import "./ProjectList.css"; // Import custom CSS
 
 const ProjectList = () => {
   const [projects, setProjects] = useState([]);
@@ -20,14 +22,14 @@ const ProjectList = () => {
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const projectsPerPage = 10; 
+  const projectsPerPage = 10;
 
   const fetchProjects = useCallback(async (page) => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await getProjects(authToken, page, projectsPerPage);
       setProjects(response.projects);
-      setTotalProjects(response.total); 
+      setTotalProjects(response.total);
       setIsLoadingProjects(false);
     } catch (error) {
       console.error("Error fetching projects:", error);
@@ -49,11 +51,11 @@ const ProjectList = () => {
     try {
       const authToken = localStorage.getItem("authToken");
       const response = await deleteProject(authToken, projectId);
-      toast.success(response.message);
+      toast.success("🗑️ " + response.message);
       fetchProjects(currentPage);
     } catch (error) {
       console.error("Error deleting project:", error);
-      toast.error("Failed to delete. Please try again.");
+      toast.error("❌ Failed to delete. Please try again.");
     }
   };
 
@@ -73,12 +75,12 @@ const ProjectList = () => {
         name: editProject.name,
         description: editProject.description,
       });
-      toast.success(response.message);
+      toast.success("✅ " + response.message);
       setShowEditModal(false);
       fetchProjects(currentPage);
     } catch (error) {
       console.error("Error updating project:", error);
-      toast.error("Failed to update. Please try again.");
+      toast.error("❌ Failed to update. Please try again.");
     }
   };
 
@@ -93,7 +95,7 @@ const ProjectList = () => {
 
   return (
     <div className="container mt-5">
-      <h4>Your Projects:</h4>
+      <h4>📋 Your Projects:</h4>
       <div className="mt-3">
         {isLoadingProjects ? (
           <div className="text-center">
@@ -104,10 +106,10 @@ const ProjectList = () => {
             {errorProjects}
           </Alert>
         ) : projects.length === 0 ? (
-          <p>No projects found.</p>
+          <p>🚫 No projects found.</p>
         ) : (
           <table className="table table-striped table-hover table-bordered">
-            <thead className="thead-dark">
+            <thead className="table-header">
               <tr>
                 <th>Serial No.</th>
                 <th>Name</th>
@@ -133,16 +135,16 @@ const ProjectList = () => {
                       className="mr-2"
                       onClick={() => handleEdit(project)}
                     >
-                      Edit
+                      <FaEdit /> Edit
                     </Button>
-                    </td>
-                    <td className="text-center">
+                  </td>
+                  <td className="text-center">
                     <Button
                       variant="danger"
                       size="sm"
                       onClick={() => handleDelete(project._id)}
                     >
-                      Delete
+                      <FaTrash /> Delete
                     </Button>
                   </td>
                 </tr>
@@ -156,16 +158,44 @@ const ProjectList = () => {
       {projects.length > 0 && (
         <nav>
           <ul className="pagination">
-            <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={() => paginate(currentPage - 1)}>Previous</button>
+            <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+              <button
+                className="page-link"
+                onClick={() => paginate(currentPage - 1)}
+              >
+                Previous
+              </button>
             </li>
-            {[...Array(Math.ceil(totalProjects / projectsPerPage)).keys()].map(pageNumber => (
-              <li key={pageNumber + 1} className={`page-item ${pageNumber + 1 === currentPage ? 'active' : ''}`}>
-                <button className="page-link" onClick={() => paginate(pageNumber + 1)}>{pageNumber + 1}</button>
-              </li>
-            ))}
-            <li className={`page-item ${currentPage === Math.ceil(totalProjects / projectsPerPage) ? 'disabled' : ''}`}>
-              <button className="page-link" onClick={() => paginate(currentPage + 1)}>Next</button>
+            {[...Array(Math.ceil(totalProjects / projectsPerPage)).keys()].map(
+              (pageNumber) => (
+                <li
+                  key={pageNumber + 1}
+                  className={`page-item ${
+                    pageNumber + 1 === currentPage ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => paginate(pageNumber + 1)}
+                  >
+                    {pageNumber + 1}
+                  </button>
+                </li>
+              )
+            )}
+            <li
+              className={`page-item ${
+                currentPage === Math.ceil(totalProjects / projectsPerPage)
+                  ? "disabled"
+                  : ""
+              }`}
+            >
+              <button
+                className="page-link"
+                onClick={() => paginate(currentPage + 1)}
+              >
+                Next
+              </button>
             </li>
           </ul>
         </nav>
@@ -179,7 +209,7 @@ const ProjectList = () => {
         <Modal.Body>
           <Form>
             <Form.Group controlId="formProjectName">
-              <Form.Label>Project Name</Form.Label>
+              <Form.Label>📝 Project Name</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Enter project name"
@@ -190,7 +220,7 @@ const ProjectList = () => {
               />
             </Form.Group>
             <Form.Group controlId="formProjectDescription">
-              <Form.Label>Project Description</Form.Label>
+              <Form.Label>📄 Project Description</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}

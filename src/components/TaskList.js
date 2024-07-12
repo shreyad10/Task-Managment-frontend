@@ -3,6 +3,7 @@ import { getTasks, deleteTask, updateTask } from '../api/api';
 import { Modal, Button, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast } from "react-toastify";
+import { FaEdit, FaTrash } from 'react-icons/fa'; // Import FontAwesome icons
 
 const TaskList = () => {
   const [tasks, setTasks] = useState([]);
@@ -113,7 +114,7 @@ const TaskList = () => {
         ) : (
           <div className="table-responsive">
             <table className="table table-striped table-bordered">
-              <thead className="thead-dark">
+              <thead className="table-header">
                 <tr>
                   <th>Serial No.</th>
                   <th>Task Name</th>
@@ -138,22 +139,22 @@ const TaskList = () => {
                     <td>{new Date(task?.dueDate).toLocaleString()}</td>
                     <td className="text-center">
                       <Button
-                       variant="info" 
-                      size="sm"
-                      className="mr-2"
-                      onClick={() => handleEdit(task._id)}
-                    >
-                      Edit
-                    </Button>
+                        variant="info"
+                        size="sm"
+                        className="mr-2"
+                        onClick={() => handleEdit(task._id)}
+                      >
+                        <FaEdit /> Edit
+                      </Button>
                     </td>
                     <td className="text-center">
-                    <Button
-                      variant="danger"
-                      size="sm"
-                      onClick={() => handleDelete(task._id)}
-                    >
-                      Delete
-                    </Button>
+                      <Button
+                        variant="danger"
+                        size="sm"
+                        onClick={() => handleDelete(task._id)}
+                      >
+                        <FaTrash /> Delete
+                      </Button>
                     </td>
                   </tr>
                 ))}

@@ -1,6 +1,30 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+// Keyframes for animations
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+
+const pulse = keyframes`
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+`;
 
 // Styled components for custom styling
 const Container = styled.div`
@@ -8,21 +32,43 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 80vh;
+  animation: ${fadeIn} 1s ease-out;
+  padding-top: 0vh; /* Adjusted this value to move the text upwards */
 `;
 
 const Title = styled.h1`
   font-size: 3rem;
-  margin-bottom: 2rem;
-  color: #333;
+  margin-bottom: 1.5rem;
+  color: #343a40;
   text-align: center;
+  animation: ${fadeIn} 1.5s ease-out;
+  animation: ${pulse} 2s infinite;
+
+  &::before {
+    content: "🚀 ";
+  }
+
+  &::after {
+    content: " 🚀";
+  }
 `;
 
 const Subtitle = styled.p`
   font-size: 1.5rem;
-  color: #666;
+  color: #495057;
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
+  max-width: 600px;
+  animation: ${fadeIn} 2s ease-out;
+
+  &::before {
+    content: "💼 ";
+  }
+
+  &::after {
+    content: " 💼";
+  }
 `;
 
 const Button = styled(Link)`
@@ -33,10 +79,20 @@ const Button = styled(Link)`
   border: none;
   border-radius: 5px;
   text-decoration: none;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  animation: ${fadeIn} 2.5s ease-out;
 
   &:hover {
     background-color: #0056b3;
+    transform: translateY(-5px);
+  }
+
+  &::before {
+    content: "🚀 ";
+  }
+
+  &::after {
+    content: " 🚀";
   }
 `;
 
@@ -53,7 +109,10 @@ const Home = () => {
   return (
     <Container>
       <Title>Welcome to Project Manager</Title>
-      <Subtitle>Your central hub for organizing projects & microtasks efficiently.</Subtitle>
+      <Subtitle>
+        Your central hub for organizing projects & microtasks efficiently. 
+        Stay on top of your tasks and collaborate seamlessly with your team.
+      </Subtitle>
       <Button to={redirectPath}>Get Started</Button>
     </Container>
   );

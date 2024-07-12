@@ -64,11 +64,11 @@ const Tasks = () => {
   return (
     <Container className="container mt-5">
       <div className="d-flex justify-content-between align-items-center mb-3">
-        <h5 className="dashboard-animation">Stay focused and productive! What's your next move?</h5>
+      <h5 className="dashboard-animation">     📅 Stay focused and productive! What's your next move?</h5>
         <div className="position-relative">
           {projects.length > 0 ? (
             <Button variant="primary" onClick={handleShow} className="btn-add-task">
-              Add Task
+              Add Task 📝
             </Button>
           ) : (
             <Alert variant="warning" className="text-center" dismissible onClose={handleAlertClose}>
